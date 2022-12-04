@@ -23,6 +23,8 @@ void setup() {
     Serial.println("init failed");
   }
 
+  Serial.println("transmitter");
+
 }
 
 void loop() {
@@ -39,21 +41,21 @@ void loop() {
   Serial.print(distance);
   Serial.println(" cm");
 
-  delay(100);
-
   if (distance > 10) {
-    const char *msg = "clear";
-    driver.send((uint8_t *)msg, strlen(msg));
+    int m1 = 0;
+    driver.send((uint8_t *) &m1, 2);
+    Serial.println("Sent a 0.");
     driver.waitPacketSent();
   }
 
   else {
-    const char *msg = "obstacle";
-    driver.send((uint8_t *)msg, strlen(msg));
+
+    int m1 = 1;
+    driver.send((uint8_t *) &m1, 2);
+    Serial.println("Sent a 1.");
     driver.waitPacketSent();
   }
 
   Serial.println("msg sent!");
-  delay(1000);
 
 }
