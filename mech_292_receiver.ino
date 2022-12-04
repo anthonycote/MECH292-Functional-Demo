@@ -18,19 +18,22 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
 
-  digitalWrite(vibrationPin, LOW);
-  delay(250);
-  digitalWrite(vibrationPin, HIGH);
-  delay(250);
+  int received_value = -1;
+  uint8_t buflen = 2;
 
-  uint8_t buf[12];
-  uint8_t buflen = sizeof(buf);
+  if (driver.recv((uint8_t *) &received_value, &buflen)) {
+    Serial.println(received_value);
+    Serial.println("!!!");
 
-  if (driver.recv(buf, &buflen)) {
-    int i;
-    Serial.println((char*)buf);
+    if (received_value == 1) {
+      digitalWrite(vibrationPin, LOW);
+    }
+
+    else {
+      digitalWrite(vibrationPin, HIGH);
+    }
+    
   }
 
 }
